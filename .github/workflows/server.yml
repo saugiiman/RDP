@@ -13,10 +13,10 @@ jobs:
         run: |
           mkdir server
           cd server
-          wget https://launcher.mojang.com/v1/objects/fe3b2e821f2e7fbde45f8e37c3a53b9aa0c64b64/server.jar -O server.jar
+          wget https://fill-data.papermc.io/v1/objects/8de7c52c3b02403503d16fac58003f1efef7dd7a0256786843927fa92ee57f1e/paper-1.21.8-60.jar -O server.jar
           echo "eula=true" > eula.txt
 
       - name: Start Minecraft Server
         run: |
           cd server
-          java -Xmx2G -Xms1G -jar server.jar nogui
+          java -Xmx4G -Xms10G -jar server.jar nogui
