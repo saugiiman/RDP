@@ -5,24 +5,24 @@ on:
 
 jobs:
   run-server:
-    runs-on: ubuntu-latest
-    timeout-minutes: 360
+    runs-on: ubuntu-latest   # ✅ tells GitHub where to run this job
+    timeout-minutes: 360     # keeps runner alive up to 6 hours
 
     steps:
-      - name: Download Minecraft Server
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Download Paper 1.21.8
         run: |
           mkdir server
           cd server
-          wget https://fill-data.papermc.io/v1/objects/8de7c52c3b02403503d16fac58003f1efef7dd7a0256786843927fa92ee57f1e/paper-1.21.8-60.jar -O server.jar
+          curl -o server.jar https://api.papermc.io/v2/projects/paper/versions/1.21.8/builds/110/downloads/paper-1.21.8-110.jar
           echo "eula=true" > eula.txt
 
       - name: Start Minecraft Server
         run: |
           cd server
-          java -Xmx2G -Xms1G -jar server.jar nogui
-      - name: Set up Java 21
-  uses: actions/setup-java@v4
-  with:
-    distribution: temurin
-    java-version: 21
-
+          java -Xmx1G -Xms512M -jar server.jar nogui
